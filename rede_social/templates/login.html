@@ -2,18 +2,18 @@
     <style>
         .login-form {
             margin: 0 auto;
-            width: 50%;
+            width: 400px;
+        }
+        .form-title {
+            text-align: center;
         }
     </style>
 </head>
 
 {% extends "layout.html" %}
 {% block conteudo %}
-<div class="jumbotron">
-    <h1>Página de login</h1>
-</div>
-
 <div class="login-form shadow p-3 mb-5 bg-white rounded">
+    <h2 class="form-title">Fazer login</h2><br>
     <form>
   <div class="form-group">
     <label for="exampleInputEmail1">Email</label>

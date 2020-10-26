@@ -1,6 +1,6 @@
 <head>
     <style>
-        a {
+        a.login-click {
             font-weight: bold;
         }
     </style>
@@ -8,7 +8,7 @@
 
 {% extends "layout.html" %}
 {% block conteudo %}
-<div class="jumbotron">
+<div class="title_page">
     <h1>Página Inicial</h1>
 </div>
 
@@ -19,7 +19,7 @@
             </div>
         {% else %}
         <br><div class="alert alert-danger" role="alert">
-             Você não está logado! Faça o <a class="text-reset" href="{{url_for('loginpage')}}">login</a>
+             Você não está logado! Faça o <a class="login-click text-reset" href="{{url_for('loginpage')}}">login</a>
         </div>
         {% endif %}
     </div>
