@@ -6,9 +6,54 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 
     <title>Hello, world!</title>
+
+    <style>
+        footer {
+            text-align: center;
+            margin: 5px;
+        }
+
+        nav {
+            background-color: lightblue;
+        }
+
+        .jumbotron {
+            background-color: lightblue;
+            color: white;
+            text-align: center;
+        }
+    </style>
   </head>
   <header>
-
+    <nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+      <a class="navbar-brand" href="{{url_for('homepage')}}">Infolot</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('homepage')}}">Inicio <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('aboutpage')}}">Sobre</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('contactpage')}}">Contato</a>
+      </li>
+    </ul>
+    <form class="form-inline">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">@</span>
+      </div>
+      <input type="text" class="form-control" placeholder="Usuário" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+  </form>
+  </div>
+  </div>
+</nav><br>
   </header>
 
   <body>
@@ -18,9 +63,9 @@
 
     <script src="/static/js/jquery-3.5.1.slim.min.js"></script>
     <script src="/static/js/bootstrap.bundle.min.js"></script>
-  </body>
+  </body><br>
   <footer>
-      Todos os direitos reservados a JKL's
+      Todos os direitos reservados a JKL's - 2020.
   </footer>
 
 </html>

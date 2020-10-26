@@ -1,7 +1,26 @@
+<head>
+    <style>
+        a {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
 {% extends "layout.html" %}
 {% block conteudo %}
 <div class="jumbotron">
     <h1>Página Inicial</h1>
-    <h2>Linha de teste</h2>
 </div>
+
+<div class="container-sm">
+        {% if logado == True %}
+           <br> <div class="alert alert-success" role="alert">
+                Seja bem vindo!
+            </div>
+        {% else %}
+        <br><div class="alert alert-danger" role="alert">
+             Você não está logado! Faça o <a class="text-reset" href="{{url_for('loginpage')}}">login</a>
+        </div>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -1,6 +1,32 @@
+
+<head>
+    <style>
+        img.imagem {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    </style>
+</head>
 {% extends "layout.html" %}
 {% block conteudo %}
 <div class="jumbotron">
     <h1>Página de Informações</h1>
+</div>
+
+<div>
+    <p class="ideia">
+    Nossa ideia inicial é criar uma rede social
+    onde pessoas e lojas possam se comunicar a
+    respeito da lotação no estabelecimento,
+    a fim de evitar aglomerações.
+    A proposta é voltada para atender uma
+    demanda trazida com a pandemia do novo
+    Coronavírus, que é uma
+    realidade vivida hoje por todos.
+    </p>
+
+    <img src="../static/img/corona-man.jpg" class="imagem" width="690" heigth="180" alt="Homem de máscara" />
 </div>
 {% endblock %}
