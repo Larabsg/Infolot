@@ -3,6 +3,18 @@
         a.login-click {
             font-weight: bold;
         }
+        .intro {
+            float: left;
+            width: 400px;
+            text-align: center;
+            padding-top: 50px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.125em;
+        }
+        .imagem {
+            float: right;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
     </style>
 </head>
 
@@ -20,7 +32,19 @@
         {% else %}
         <br><div class="alert alert-danger" role="alert">
              Você não está logado! Faça o <a class="login-click text-reset" href="{{url_for('loginpage')}}">login</a>
-        </div>
+        </div><br><br>
         {% endif %}
+
+    <div class="intro">
+        Em tempos de pandemia o que mais queremos é nos cuidar, certo?
+        Porém precisamos ir em lojas, supermercados, mas com aquele medo:
+        "Será que aquele local estará muito cheio? Será que nesse horário
+        eu conseguirei evitar aglomeração?"
+        São essas dúvidas que passam pela cabeça neste momento atípico. Por isso
+        este projeto pode lhe auxiliar!
+    </div>
+    <div class="imagem">
+        <img src="../static/img/undraw_social_distancing_2g0u.svg" width="400">
+    </div>
     </div>
 {% endblock %}

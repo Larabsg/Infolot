@@ -6,13 +6,21 @@
             margin-left: auto;
             margin-right: auto;
         }
+        .ideia {
+            float: left;
+            width: 400px;
+            text-align: center;
+            padding-top: 50px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.125em;
+        }
 
     </style>
 </head>
 {% extends "layout.html" %}
 {% block conteudo %}
 <div class="title_page">
-    <h1>Página de Informações</h1>
+    <h1>Sobre</h1>
 </div>
 
 <div class="container">
@@ -26,7 +34,8 @@
     Coronavírus, que é uma
     realidade vivida hoje por todos.
     </p>
-
-    <img src="../static/img/corona-man.jpg" class="imagem" width="690" heigth="180" alt="Homem de máscara" />
+</div>
+<div class="imagem">
+    <img src="../static/img/corona-man.jpg" class="imagem" width="500" heigth="180" alt="Homem de máscara" />
 </div>
 {% endblock %}
