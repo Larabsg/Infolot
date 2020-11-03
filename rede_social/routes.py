@@ -21,3 +21,7 @@ def loginpage():
 @app.route('/cadastro')
 def registerpage():
     return render_template('register.html')
+
+@app.route('/feed')
+def feedpage():
+    return render_template('feed.html')

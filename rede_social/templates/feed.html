@@ -1,0 +1,34 @@
+<head>
+    <style>
+        .banner {
+            margin: 50px 100px 0px 50px;
+        }
+        h1 {
+            display: inline;
+            margin-left: 50px;
+        }
+        .contador-pessoas{
+            margin-left: 50px;
+            width: 300px;
+            border: 1px solid black;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+{% extends "layout.html" %}
+{% block conteudo %}
+    <div class="banner">
+        <img src="../static/img/store-984393_1920.jpg" alt="" width="1200" height="400" /><br>
+    </div>
+    <div>
+        <h1 class="p-2 bd-highlight">Loja da Mariazinha</h1>
+        <button class="botao btn btn-success">Seguir</button>
+    </div><br><br><br>
+    <div class="contador-pessoas float-left">
+        Limite de pessoas na loja: 20.<br>
+        Pessoas dentro da loja: 15.<br>
+        Situação: Quase no limite, faltam 5 pessoas.
+
+    </div><br>
+{% endblock %}
