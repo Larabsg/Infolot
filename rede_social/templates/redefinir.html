@@ -1,0 +1,27 @@
+<head>
+    <style>
+        .login-form {
+            margin: 0 auto;
+            width: 400px;
+            margin-top: 80px;
+        }
+        .form-title {
+            text-align: center;
+        }
+    </style>
+</head>
+
+{% extends "layout.html" %}
+{% block conteudo %}
+<div class="login-form shadow p-3 mb-5 bg-white rounded">
+    <h2 class="form-title">Redefinir Senha</h2><br>
+    <form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email</label>
+    <input type="email" class="form-control" placeholder="Digite seu email cadastrado" id="exampleInputEmail1" aria-describedby="emailHelp">
+  </div>
+  <br>
+  <button type="submit" class="btn btn-secondary">Redefinir</button>
+  </form>
+</div>
+{% endblock %}

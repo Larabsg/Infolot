@@ -25,3 +25,7 @@ def registerpage():
 @app.route('/feed')
 def feedpage():
     return render_template('feed.html')
+
+@app.route('/redefinir_senha')
+def redefinirpage():
+    return render_template('redefinir.html')

@@ -30,8 +30,11 @@
   </div>
   <div>
       <a class="text-reset" href="{{url_for('registerpage')}}">Ainda não possui uma conta? Cadastre-se agora.</a>
+  </div>
+  <div>
+      <a class="text-reset" href="{{url_for('redefinirpage')}}">Esqueceu a senha?</a>
   </div><br>
-  <button type="submit" class="btn btn-secondary">Entrar</button>
+  <button type="submit" class="btn btn-secondary"><a class="text-reset" href="{{url_for('feedpage')}}">Entrar</a></button>
   </form>
 </div>
 {% endblock %}
