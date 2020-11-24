@@ -29,11 +29,13 @@
             margin-left: 25%;
         }
     </style>
+
 </head>
 
 {% extends "layout.html" %}
 {% block conteudo %}
-    <div class="ban/ner">
+
+    <div>
         <img src="../static/img/store-984393_1920.jpg" class="banner" alt="" /><br>
     </div>
     <div>
@@ -50,8 +52,31 @@
         Limite de pessoas na loja: 20.
         Pessoas dentro da loja: 15.<br>
         Situação: Quase no limite, faltam 5 pessoas.
+        <p>Clique para ver suas coordenadas.</p>
+
+        <button class="btn btn-primary" onclick="getLocation()">Aperte aqui</button>
+
+        <p id="demo"></p>
+
+        <script>
+        var x = document.getElementById("demo");
+
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else {
+            x.innerHTML = "Geolocalização não suportada pelo seu navegador.";
+          }
+        }
+
+        function showPosition(position) {
+          x.innerHTML = "Latitude: " + position.coords.latitude +
+          "<br>Longitude: " + position.coords.longitude;
+        }
+        </script>
     </div><br>
     <div class="area-texto">
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Digite uma mensagem"></textarea>
     </div>
+
 {% endblock %}
