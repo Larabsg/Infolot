@@ -29,3 +29,17 @@ def feedpage():
 @app.route('/redefinir_senha')
 def redefinirpage():
     return render_template('redefinir.html')
+
+@app.route('/contador_manual')
+def contador_manual():
+    return render_template('contador_manual.html')
+
+@app.route('/buscar')
+def buscar():
+    return str(request.args)
+    busca = request.args['search']
+    return f'busca:{busca}'
+
+
+
+

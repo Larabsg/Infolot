@@ -1,0 +1,39 @@
+<head>
+    <style>
+        .botoes {
+            margin-top: 10%;
+        }
+        .btn {
+            width: 400px;
+            height: 200px;
+            margin-left: 35%;
+        }
+        p {
+            font-size: 40px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+{% extends "layout.html" %}
+{% block conteudo%}
+<div class="botoes">
+    <button class="botao-entrei btn btn-success" onclick="aumenta()"><p>Entrei</p></button><br><br>
+    <button class="botao-sai btn btn-danger" onclick="diminui()"><p>Saí</p></button>
+</div>
+
+<script>
+	let barra_tamanho = 0;
+	function aumenta(){
+    	barra_tamanho += 10;
+        atualizaBarra();
+    }
+    function diminui(){
+    	barra_tamanho--;
+        atualizaBarra();
+    }
+    function atualizaBarra(){
+    	let barra = document.getElementById('lotacao');
+        barra.style.width = barra_tamanho+'%';
+    }
+</script>
+{% endblock %}

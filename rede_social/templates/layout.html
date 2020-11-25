@@ -41,6 +41,10 @@
         margin-top: 60px;
         padding-left: 100px;
     }
+    .botao-ir {
+        background-color: #E9ECEF;
+        color: black;
+    }
     </style>
   </head>
   <header>
@@ -67,7 +71,13 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">@</span>
       </div>
-      <input type="text" class="form-control" placeholder="Usuário" aria-label="Username" aria-describedby="basic-addon1">
+      <form class="input-group mb-3" method="get"
+            action="{{ url_for('buscar') }}">
+          <input type="text" name="search" class="form-control" placeholder="Usuário" aria-label="Username" aria-describedby="basic-addon1">
+          <div class="input-group-append">
+            <input class="btn btn-secondary botao-ir" type="submit" value="ir"/>
+            </div>
+        </form>
     </div>
     </form>
   </div>
