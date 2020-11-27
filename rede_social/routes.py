@@ -50,7 +50,6 @@ def buscar():
 def info_login():
     email_login = request.form['email_login']
     senha_login = request.form['senha_login']
-<<<<<<< HEAD
     return f'Email de login: {email_login}\nSenha de login: {senha_login}'
 
 #Rota para inputs de cadastro
@@ -60,8 +59,5 @@ def cadastrar():
     email_cad = request.form['email_cad']
     senha_cad = request.form['senha_cad']
     return f'{nome_cad} usa email {email_cad} e senha {senha_cad}'
-=======
-    return email_login, senha_login
 
 
->>>>>>> 190eb7718367014f3b83a1a97283483896c2395b
