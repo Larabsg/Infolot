@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 
-    <title>Infolot</title>
+    <title>{% block titulo %}{% endblock %}</title>
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
         .content {
             min-height: calc(100vh - 70px);
         }
@@ -45,6 +46,7 @@
         background-color: #E9ECEF;
         color: black;
     }
+    {% block style %} {% endblock %}
     </style>
   </head>
   <header>

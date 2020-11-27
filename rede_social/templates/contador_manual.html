@@ -1,5 +1,6 @@
-<head>
-    <style>
+{% extends "layout.html" %}
+{% block titulo %}Infolot{% endblock %}
+{% block style %}
         .botoes {
             margin-top: 10%;
         }
@@ -12,9 +13,8 @@
             font-size: 40px;
             text-transform: uppercase;
         }
-    </style>
-</head>
-{% extends "layout.html" %}
+{% endblock %}
+
 {% block conteudo%}
 <div class="botoes">
     <button class="botao-entrei btn btn-success" onclick="aumenta()"><p>Entrei</p></button><br><br>

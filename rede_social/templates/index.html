@@ -1,5 +1,6 @@
-<head>
-    <style>
+{% extends "layout.html" %}
+{% block titulo %}Infolot - início{% endblock %}
+{% block style %}
         a.login-click {
             font-weight: bold;
         }
@@ -14,16 +15,8 @@
         .imagem {
             float: right;
         }
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
-    </style>
-</head>
-
-{% extends "layout.html" %}
+{% endblock %}
 {% block conteudo %}
-<!--<div class="title_page">
-    <h1>Página Inicial</h1>
-</div>-->
-
 <div class="container-sm">
         {% if logado == True %}
            <br> <div class="alert alert-success" role="alert">
