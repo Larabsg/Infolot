@@ -1,6 +1,8 @@
 from rede_social import app
 from flask import render_template, redirect, url_for, request
 
+#http://larabsg18.pythonanywhere.com
+
 @app.route('/')
 def homepage():
     usuario_logado = False
