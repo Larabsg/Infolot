@@ -1,6 +1,8 @@
 from rede_social import app
 from flask import render_template, redirect, url_for, request
 
+#http://larabsg18.pythonanywhere.com
+
 @app.route('/')
 def homepage():
     usuario_logado = False
@@ -43,6 +45,6 @@ def buscar():
 def info_login():
     email_login = request.form['email_login']
     senha_login = request.form['senha_login']
-
+    return email_login, senha_login
 
 
