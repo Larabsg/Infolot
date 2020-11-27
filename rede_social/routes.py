@@ -36,10 +36,13 @@ def contador_manual():
 
 @app.route('/buscar')
 def buscar():
-    return str(request.args)
     busca = request.args['search']
     return f'busca:{busca}'
 
+@app.route('/info_login')
+def info_login():
+    email_login = request.form['email_login']
+    senha_login = request.form['senha_login']
 
 
 

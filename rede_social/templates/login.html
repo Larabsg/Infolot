@@ -15,14 +15,15 @@
 {% block conteudo %}
 <div class="login-form shadow p-3 mb-5 bg-white rounded">
     <h2 class="form-title">Fazer login</h2><br>
-    <form>
+    <form method="post"
+            action="{{ url_for('info_login') }}">
   <div class="form-group">
     <label for="exampleInputEmail1">Email</label>
-    <input type="email" class="form-control" placeholder="xxxxxx@gmail.com" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <input type="email" name="email_login" class="form-control" placeholder="xxxxxx@gmail.com" id="exampleInputEmail1" aria-describedby="emailHelp">
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Senha</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
+    <input type="password" name="senha_login" class="form-control" id="exampleInputPassword1">
   </div>
   <div class="form-group form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
