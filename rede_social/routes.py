@@ -1,4 +1,5 @@
 from rede_social import app
+import math
 from flask import render_template, redirect, url_for, request
 
 #http://larabsg18.pythonanywhere.com
@@ -60,4 +61,38 @@ def cadastrar():
     senha_cad = request.form['senha_cad']
     return f'{nome_cad} usa email {email_cad} e senha {senha_cad}'
 
+# Rota para funcionalidade geolocalização
+
+#dicionario de teste para nao apresentar o erro ao procurar por 'lojas'
+lojas = {'Maria': {'lat': -4.5921858, 'lon': -37.735278, 'area': 10.0, 'ocupacao': 0}}
+
+@app.route('/checking', methods=['POST'])
+def checking():
+    lat = float(request.form['lat'])*math.pi/180
+    lon = float(request.form['lon'])*math.pi/180
+    loja = request.form['loja']
+
+    l_cad = lojas[loja]
+
+    l_lat = l_cad['lat']*math.pi/180
+    l_lon = l_cad['lon']*math.pi/180
+    l_a = l_cad['area']
+
+    raio = math.sqrt(l_a/math.pi)
+
+    deltaLng = l_lon - lon
+
+    s = math.cos(math.pi/2 - l_lat)*math.cos(math.pi/2 - lat) + math.sin(math.pi/2 - l_lat)*math.sin(math.pi/2 - lat)*math.cos(deltaLng)
+    arco = math.acos(s)
+
+    distancia = arco*6378*1000
+
+# Confere se a pessoa que fez checking está dentro ou fora da loja
+
+    if distancia <= raio:
+        l_cad['ocupacao'] += 1
+        return "Dentro"
+    else: 
+        return f'Fora. Distância: {distancia} metros. Raio: {raio} metros'
+    return f'Você está na loja {loja}'
 

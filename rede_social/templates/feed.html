@@ -30,7 +30,11 @@
             margin-left: 25%;
         }
         .botoes {
-            margin-left: 45%;
+            margin-left: 43%;
+        }
+        .botao {
+            background-color: #386C6D;
+            color: #ffff;
         }
 {% endblock %}
 {% block conteudo %}
@@ -39,30 +43,35 @@
         <img src="../static/img/store-984393_1920.jpg" class="banner" alt="" /><br>
     </div>
     <div>
-        <h1 class="p-2 bd-highlight">Loja da Mariazinha</h1>
-        <button class="botao btn btn-success">Seguir</button>
+        <h1 class="p-2 bd-highlight">Maria's Store</h1>
+        <button class="botao btn">Seguir</button>
     </div><hr>
     <div class="progresso-title">
         <h3>Quantas pessoas há?</h3>
     </div>
     <div class="progress progresso">
-  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{lotacao}}%" id="lotacao" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{lotacao}}%" id="lotacao" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10"></div>
 </div>
 <div class="botoes">
-    <button class="btn btn-success">Entrei</button>
-    <button class="btn btn-danger">Saí</button>
+    <button class="btn btn-success" onclick="aumenta()">Entrei</button>
+    <button class="btn btn-danger" onclick="diminui()">Saí</button>
 </div>
     <div class="contador-pessoas">
         Limite de pessoas na loja: 20.
-        Pessoas dentro da loja: 15.<br>
+        <p id="situacao">Dentro da loja: {{barra_tamanho}}.</p>
         Situação: Quase no limite, faltam 5 pessoas.
         <br><br><p>Clique para enviar suas coordenadas.</p>
 
-        <button class="btn btn-primary" onclick="getLocation()">Aperte aqui</button>
-
+        <form action="/checking" method="POST">
+            <input type="hidden" name="loja" id="loja1" value="Maria">
+            <input type="hidden" value="" name="lat" id="lat">
+            <input type="hidden" value="" name="lon" id="lon">
+            <input type="submit" value="Diga que você está aqui" class="btn btn-primary">
+        </form>
         <p id="demo"></p>
 
         <script>
+        //Recebendo geolocalização do navegador
         var x = document.getElementById("demo");
 
         function getLocation() {
@@ -73,12 +82,42 @@
           }
         }
 
-        function showPosition(position) {
-          x.innerHTML = "Latitude: " + position.coords.latitude +
-          "<br>Longitude: " + position.coords.longitude;
+        function preencher(position) {
+          let lat = document.getElementById('lat');
+          let lon = document.getElementById('lon');
+
+          lat.value = position.coords.latitude;
+          lon.value = position.coords.longitude;
+          console.log('Lat: ${lat.value}, Lon: ${lon.value}')
+        }
+
+        window.onload = function() {
+            getLocation();
+        }
+
+        //Funcionalidade de aumentar e diminuir dos botões
+
+        let barra_tamanho = 0;
+	    function aumenta(){
+    	    barra_tamanho += 10;
+            atualizaBarra();
+            atualizaSituacao();
+        }
+        function diminui(){
+    	    barra_tamanho-=10;
+            atualizaBarra();
+            atualizaSituacao();
+        }
+        function atualizaBarra(){
+    	    let barra = document.getElementById('lotacao');
+            barra.style.width = barra_tamanho+'%';
+        }
+        function atualizaSituacao() {
+            let barra = document.getElementById('situacao');
+            barra.p = barra_tamanho;
         }
         </script>
-    </div><br>
+
     <div class="area-texto">
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Digite uma mensagem"></textarea>
     </div>
