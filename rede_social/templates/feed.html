@@ -29,6 +29,9 @@
             width: 45%;
             margin-left: 25%;
         }
+        .botoes {
+            margin-left: 45%;
+        }
 {% endblock %}
 {% block conteudo %}
 
@@ -45,7 +48,7 @@
     <div class="progress progresso">
   <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{lotacao}}%" id="lotacao" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
-<div>
+<div class="botoes">
     <button class="btn btn-success">Entrei</button>
     <button class="btn btn-danger">Saí</button>
 </div>
@@ -64,7 +67,7 @@
 
         function getLocation() {
           if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
+            navigator.geolocation.getCurrentPosition(preencher);
           } else {
             x.innerHTML = "Geolocalização não suportada pelo seu navegador.";
           }
