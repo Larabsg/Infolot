@@ -46,20 +46,30 @@
         <h1 class="p-2 bd-highlight">Maria's Store</h1>
         <button class="botao btn">Seguir</button>
     </div><hr>
+    {% if dados %}
+        <div class="alert alert-success container">
+            Olá, {{dados.email}}
+        </div>
+    {% endif %}
     <div class="progresso-title">
         <h3>Quantas pessoas há?</h3>
     </div>
-    <div class="progress progresso">
+    <div class="progress progresso text-center">
   <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{lotacao}}%" id="lotacao" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10"></div>
 </div>
-<div class="botoes">
+<div class="text-center">
     <button class="btn btn-success" onclick="aumenta()">Entrei</button>
     <button class="btn btn-danger" onclick="diminui()">Saí</button>
 </div>
-    <div class="contador-pessoas">
+    <div class="contador-pessoas text-center">
         Limite de pessoas na loja: 20.
         <p id="situacao">Dentro da loja: {{barra_tamanho}}.</p>
         Situação: Quase no limite, faltam 5 pessoas.
+        {% if ocupacao %}
+            <div>
+                Conta: {{ocupacao.conta}}
+            </div>
+        {% endif %}
         <br><br><p>Clique para enviar suas coordenadas.</p>
 
         <form action="/checking" method="POST">

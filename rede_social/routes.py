@@ -50,8 +50,8 @@ def buscar():
 @app.route('/info_login', methods=['POST'])
 def info_login():
     email_login = request.form['email_login']
-    senha_login = request.form['senha_login']
-    return f'Email de login: {email_login}\nSenha de login: {senha_login}'
+    #senha_login = request.form['senha_login']
+    return render_template('feed.html', dados={'email': email_login})
 
 #Rota para inputs de cadastro
 @app.route('/cadastrar', methods=['POST'])
@@ -64,7 +64,7 @@ def cadastrar():
 # Rota para funcionalidade geolocalização
 
 #dicionario de teste para nao apresentar o erro ao procurar por 'lojas'
-lojas = {'Maria': {'lat': -4.5921858, 'lon': -37.735278, 'area': 10.0, 'ocupacao': 0}}
+lojas = {'Maria': {'lat': -4.5921858, 'lon': -37.735278, 'area': 70.0, 'ocupacao': 0}}
 
 @app.route('/checking', methods=['POST'])
 def checking():
@@ -91,7 +91,7 @@ def checking():
 
     if distancia <= raio:
         l_cad['ocupacao'] += 1
-        return "Dentro"
+        return render_template('feed.html', ocupacao={'conta': l_cad})
     else: 
         return f'Fora. Distância: {distancia} metros. Raio: {raio} metros'
     return f'Você está na loja {loja}'
