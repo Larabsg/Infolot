@@ -51,6 +51,7 @@ def buscar():
 def info_login():
     email_login = request.form['email_login']
     #senha_login = request.form['senha_login']
+    bool_conectado = "conectado" in request.form
     return render_template('feed.html', dados={'email': email_login})
 
 #Rota para inputs de cadastro
@@ -64,7 +65,7 @@ def cadastrar():
 # Rota para funcionalidade geolocalização
 
 #dicionario de teste para nao apresentar o erro ao procurar por 'lojas'
-lojas = {'Maria': {'lat': -4.5921858, 'lon': -37.735278, 'area': 70.0, 'ocupacao': 0}}
+lojas = {'Maria': {'lat': -4.5921858, 'lon': -37.735278, 'area': 1000.0, 'ocupacao': 0}}
 
 @app.route('/checking', methods=['POST'])
 def checking():
