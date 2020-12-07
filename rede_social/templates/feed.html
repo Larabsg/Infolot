@@ -61,22 +61,17 @@
     <button class="btn btn-success" onclick="aumenta()">Entrei</button>
     <button class="btn btn-danger" onclick="diminui()">Saí</button>
 </div>
+    
     <div class="contador-pessoas text-center">
         Limite de pessoas na loja: 20.
-        <p id="situacao">Dentro da loja: {{barra_tamanho}}.</p>
-        Situação: Quase no limite, faltam 5 pessoas.
-        {% if ocupacao %}
-            <div>
-                Conta: {{ocupacao.conta}}
-            </div>
-        {% endif %}
-        <br><br><p>Clique para enviar suas coordenadas.</p>
+        <p id="situacao">Dentro da loja: {{ocupacao}}.</p>
+        <p>Clique para enviar suas coordenadas.</p>
 
         <form action="/checking" method="POST">
             <input type="hidden" name="loja" id="loja1" value="Maria">
             <input type="hidden" value="" name="lat" id="lat">
             <input type="hidden" value="" name="lon" id="lon">
-            <input type="submit" value="Diga que você está aqui" class="btn btn-primary">
+            <input type="submit" value="Diga que você está aqui" name="" class="btn btn-primary">
         </form>
         <p id="demo"></p>
 
@@ -114,7 +109,12 @@
             atualizaSituacao();
         }
         function diminui(){
-    	    barra_tamanho-=10;
+    	    barra_tamanho -= 10;
+            atualizaBarra();
+            atualizaSituacao();
+        }
+        function aumentaGeo(){
+            barra_tamanho += 10;
             atualizaBarra();
             atualizaSituacao();
         }
@@ -127,7 +127,6 @@
             barra.p = barra_tamanho;
         }
         </script>
-
     <div class="area-texto">
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Digite uma mensagem"></textarea>
     </div>

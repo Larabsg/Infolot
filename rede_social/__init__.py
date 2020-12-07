@@ -1,19 +1,32 @@
 from flask import Flask
 import click
+import os
+
 from flask.cli import with_appcontext
+
 from flask_sqlalchemy import SQLAlchemy
+
+#sqlite:///rede_social.db
 
 db = SQLAlchemy()
 
-app = Flask(__name__)
-app.config.from_object('config')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///projeto-final.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
+def create_app():
+    app = Flask(__name__, instance_relative_config=True)
+    app.config.from_object('config')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.instance_path, 'rede_social.db')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-#app.cli.add_command(init_db_command)
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
 
-from rede_social import routes
+    db.init_app(app)
+
+    app.cli.add_command(init_db_command)
+    with app.app_context():
+        from . import routes
+    return app
 
 @click.command('init-db')
 @with_appcontext

@@ -1,6 +1,6 @@
-from rede_social import app
+# from rede_social import create_app
 import math
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request, current_app as app
 
 #http://larabsg18.pythonanywhere.com
 
@@ -10,7 +10,7 @@ def homepage():
     usuario_logado = False
     return render_template('index.html', logado = usuario_logado)
 
-@app.route('/sobre')
+@app.route('/sobre') 
 def aboutpage():
     return render_template('about.html')
 
@@ -25,6 +25,10 @@ def loginpage():
 @app.route('/cadastro')
 def registerpage():
     return render_template('register.html')
+
+@app.route('/cadastro_loja')
+def register_store():
+    return render_template('register_store.html')
 
 @app.route('/feed')
 def feedpage():
@@ -51,7 +55,7 @@ def buscar():
 def info_login():
     email_login = request.form['email_login']
     #senha_login = request.form['senha_login']
-    bool_conectado = "conectado" in request.form
+    #bool_conectado = "conectado" in request.form
     return render_template('feed.html', dados={'email': email_login})
 
 #Rota para inputs de cadastro
@@ -62,10 +66,20 @@ def cadastrar():
     senha_cad = request.form['senha_cad']
     return f'{nome_cad} usa email {email_cad} e senha {senha_cad}'
 
+@app.route('/cadastrar/loja', methods=['POST'])
+def cadastrar_loja():
+    #nome_cad_loja = request.form['nome_cad_loja']
+    #cnpj_cad_loja = request.form['cnpj_cad_loja']
+    #email_cad_loja = request.form['email_cad_loja']
+    #senha_cad_loja = request.form['senha_cad_loja']
+    ocupacao_limite = request.form['ocupacao_limite']
+    #alerta = 'Cadastro realizado com sucesso!'
+    return render_template('login.html')
+
 # Rota para funcionalidade geolocalização
 
 #dicionario de teste para nao apresentar o erro ao procurar por 'lojas'
-lojas = {'Maria': {'lat': -4.5921858, 'lon': -37.735278, 'area': 1000.0, 'ocupacao': 0}}
+lojas = {'Maria': {'lat': -4.5921858, 'lon': -37.735278, 'area': 1000.0, 'ocupa': 0}}
 
 @app.route('/checking', methods=['POST'])
 def checking():
@@ -91,8 +105,8 @@ def checking():
 # Confere se a pessoa que fez checking está dentro ou fora da loja
 
     if distancia <= raio:
-        l_cad['ocupacao'] += 1
-        return render_template('feed.html', ocupacao={'conta': l_cad})
+        ocupacao += 1
+        return render_template('feed.html', ocupacao)
     else: 
         return f'Fora. Distância: {distancia} metros. Raio: {raio} metros'
     return f'Você está na loja {loja}'
