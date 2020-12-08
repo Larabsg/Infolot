@@ -17,27 +17,32 @@
 <div class="login-form shadow p-3 mb-5 bg-white rounded">
     <h2 class="form-title">Cadastre-se</h2><br>
     <form action="/cadastrar/loja" method="POST">
-  <div class="form-group">
-    <label for="exampleInputEmail1">Nome da loja</label>
-    <input type="text" name="nome_cad_loja" class="form-control" id="exampleInputName1">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">CNPJ</label>
-    <input type="text" name="cnpj_cad_loja" class="form-control" >
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Qual o limite de pessoas na loja?</label>
-    <input type="number" name="ocupacao_limite" class="form-control" >
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email</label>
-    <input type="email" name="email_cad_loja" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-  <div class="form-group">
-    <label for="exampleInputPassword1">Senha</label>
-    <input type="password" name="senha_cad_loja" class="form-control" id="exampleInputPassword1">
-  </div>
- </div>
-  <br><input type="submit" class="btn btn-secondary" value="Registrar">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Nome da loja</label>
+          <input type="text" name="nome_cad_loja" class="form-control" id="exampleInputName1">
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">CNPJ</label>
+          <input type="text" name="cnpj_cad_loja" class="form-control" >
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Qual o limite de pessoas na loja?</label>
+          <input type="number" name="ocupacao_limite" class="form-control" >
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email</label>
+          <input type="email" name="email_cad_loja" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputPassword1">Senha</label>
+          <input type="password" name="senha_cad_loja" class="form-control" id="exampleInputPassword1">
+        </div>
+
+        <br><input type="submit" class="btn btn-secondary" value="Registrar">
   </form>
 </div>
 {% endblock %}

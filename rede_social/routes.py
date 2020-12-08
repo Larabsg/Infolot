@@ -1,6 +1,8 @@
 # from rede_social import create_app
 import math
-from flask import render_template, redirect, url_for, request, current_app as app
+from flask import render_template, redirect, url_for, request, redirect, session, current_app as app
+from rede_social import db
+from rede_social.entidades import Usuario
 
 #http://larabsg18.pythonanywhere.com
 
@@ -53,18 +55,37 @@ def buscar():
 #Rota para inputs de login
 @app.route('/info_login', methods=['POST'])
 def info_login():
-    email_login = request.form['email_login']
-    #senha_login = request.form['senha_login']
+    email_login = request.form['email_user']
+    senha_login = request.form['senha_user']
     #bool_conectado = "conectado" in request.form
-    return render_template('feed.html', dados={'email': email_login})
+    return render_template('feed.html')
 
 #Rota para inputs de cadastro
+# Cadastrar email não está dando certo
 @app.route('/cadastrar', methods=['POST'])
 def cadastrar():
-    nome_cad = request.form['nome_cad']
-    email_cad = request.form['email_cad']
-    senha_cad = request.form['senha_cad']
-    return f'{nome_cad} usa email {email_cad} e senha {senha_cad}'
+    nome_cad = request.form['nome_user']
+    email_cad = request.form['email_user']
+    senha_cad = request.form['senha_user']
+
+#Verifica se usuário já é cadastrado no banco
+    alguem = Usuario.query.filter_by(email=email_cad).first()
+
+    if alguem is not None:
+        #session['mensagem'] = 'Usuário já cadastrado'
+        return redirect('/cadastro')
+
+#Cadastra novo usuário ao banco
+    else:
+        novo = Usuario()
+        novo.nome = nome_cad
+        #novo.email = email_cad
+        novo.senha = senha_cad
+
+#Adiciona novo usuário ao banco e retorna à página de login
+        db.session.add(novo)
+        db.session.commit()
+        return render_template('login.html')
 
 @app.route('/cadastrar/loja', methods=['POST'])
 def cadastrar_loja():
@@ -72,7 +93,7 @@ def cadastrar_loja():
     #cnpj_cad_loja = request.form['cnpj_cad_loja']
     #email_cad_loja = request.form['email_cad_loja']
     #senha_cad_loja = request.form['senha_cad_loja']
-    ocupacao_limite = request.form['ocupacao_limite']
+    #ocupacao_limite = request.form['ocupacao_limite']
     #alerta = 'Cadastro realizado com sucesso!'
     return render_template('login.html')
 
@@ -105,8 +126,8 @@ def checking():
 # Confere se a pessoa que fez checking está dentro ou fora da loja
 
     if distancia <= raio:
-        ocupacao += 1
-        return render_template('feed.html', ocupacao)
+        #ocupacao += 1
+        return render_template('feed.html')
     else: 
         return f'Fora. Distância: {distancia} metros. Raio: {raio} metros'
     return f'Você está na loja {loja}'
