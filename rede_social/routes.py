@@ -2,7 +2,7 @@
 import math
 from flask import render_template, redirect, url_for, request, redirect, session, current_app as app
 from rede_social import db
-from rede_social.entidades import Usuario
+from rede_social.entidades import Usuario, Loja
 
 #http://larabsg18.pythonanywhere.com
 
@@ -32,6 +32,8 @@ def registerpage():
 def register_store():
     return render_template('register_store.html')
 
+
+
 @app.route('/feed')
 def feedpage():
     return render_template('feed.html')
@@ -57,29 +59,36 @@ def buscar():
 def info_login():
     email_login = request.form['email_user']
     senha_login = request.form['senha_user']
-    #bool_conectado = "conectado" in request.form
-    return render_template('feed.html')
+
+    alguem = Usuario.query.filter_by(email = email_login).first()
+
+    if alguem is not None:
+        if senha_login == alguem.senha:
+            return render_template('feed.html')
+        else:
+            return render_template('login.html', mensagemSenha = 'Senha inválida')
+    else:
+        return render_template('login.html', mensagemUserInex = 'Usuário inexistente')
 
 #Rota para inputs de cadastro
-# Cadastrar email não está dando certo
 @app.route('/cadastrar', methods=['POST'])
 def cadastrar():
     nome_cad = request.form['nome_user']
     email_cad = request.form['email_user']
     senha_cad = request.form['senha_user']
 
-#Verifica se usuário já é cadastrado no banco
-    alguem = Usuario.query.filter_by(email=email_cad).first()
+#Verifica se email do usuário já é cadastrado no banco
+    alguem = Usuario.query.filter_by(email = email_cad).first()
 
     if alguem is not None:
-        #session['mensagem'] = 'Usuário já cadastrado'
-        return redirect('/cadastro')
+        #mensagem = 'Usuário já cadastrado'
+        return render_template('register.html', mensagem = 'Usuário já cadastrado')
 
 #Cadastra novo usuário ao banco
     else:
         novo = Usuario()
         novo.nome = nome_cad
-        #novo.email = email_cad
+        novo.email = email_cad
         novo.senha = senha_cad
 
 #Adiciona novo usuário ao banco e retorna à página de login
@@ -89,18 +98,55 @@ def cadastrar():
 
 @app.route('/cadastrar/loja', methods=['POST'])
 def cadastrar_loja():
-    #nome_cad_loja = request.form['nome_cad_loja']
-    #cnpj_cad_loja = request.form['cnpj_cad_loja']
-    #email_cad_loja = request.form['email_cad_loja']
-    #senha_cad_loja = request.form['senha_cad_loja']
-    #ocupacao_limite = request.form['ocupacao_limite']
+    nome_cad_loja = request.form['nome_loja']
+    cnpj_cad_loja = request.form['cnpj_loja']
+    email_cad_loja = request.form['email_loja']
+    senha_cad_loja = request.form['senha_loja']
+    ocupacao_limite = request.form['ocupacao_limite']
+    latitude = request.form['latitude']
+    longitude = request.form['longitude']
     #alerta = 'Cadastro realizado com sucesso!'
-    return render_template('login.html')
+    
+    loja = Loja.query.filter_by(cnpj = cnpj_cad_loja).first()
+
+    if loja is not None:
+        #session['mensagem'] = 'Usuário já cadastrado'
+        return redirect('/cadastro_loja')
+
+    else:
+        novaLoja = Loja()
+        novaLoja.nomeLoja = nome_cad_loja
+        novaLoja.emailLoja = email_cad_loja
+        novaLoja.senhaLoja = senha_cad_loja
+        novaLoja.limite = ocupacao_limite
+        novaLoja.cnpj = cnpj_cad_loja
+        novaLoja.latitude = latitude
+        novaLoja.longitude = longitude
+
+        db.session.add(novaLoja)
+        db.session.commit()
+        return render_template('login.html')
+
+# Remove alguém do banco
+@app.route('/remove/<int:id>')
+def remove(id):
+    quem = Usuario.query.get(id)
+    db.session.delete(quem)
+    db.session.commit()
+    return f'Removi o usuário {quem.nome}'
+
+# Remove loja do banco
+@app.route('/remove/loja/<int:id>')
+def removeLoja(id):
+    quemLoja = Loja.query.get(id)
+    db.session.delete(quemLoja)
+    db.session.commit()
+    return f'Removi a loja {quemLoja.nomeLoja}'
 
 # Rota para funcionalidade geolocalização
 
 #dicionario de teste para nao apresentar o erro ao procurar por 'lojas'
-lojas = {'Maria': {'lat': -4.5921858, 'lon': -37.735278, 'area': 1000.0, 'ocupa': 0}}
+#lojas = {'Maria': {'lat': -4.5921858, 'lon': -37.735278, 'area': 1000.0, 'ocupacao': 0}}
 
 @app.route('/checking', methods=['POST'])
 def checking():
@@ -126,8 +172,8 @@ def checking():
 # Confere se a pessoa que fez checking está dentro ou fora da loja
 
     if distancia <= raio:
-        #ocupacao += 1
-        return render_template('feed.html')
+        l_cad['ocupacao'] += 1
+        return render_template('feed.html', dados = l_cad['ocupacao'])
     else: 
         return f'Fora. Distância: {distancia} metros. Raio: {raio} metros'
     return f'Você está na loja {loja}'

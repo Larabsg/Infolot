@@ -16,10 +16,15 @@
 {% block conteudo %}
 <div class="login-form shadow p-3 mb-5 bg-white rounded">
     <h2 class="form-title">Cadastre-se</h2><br>
-    <form action="/cadastrar" method="POST">
 
+    
+
+    <form action="/cadastrar" method="POST">
+      {% if mensagem %}
+      <span class="alert alert-warning">{{mensagem}}</span>
+    {% endif %}
         <div class="form-group">
-          <label for="exampleInputEmail1">Nome</label>
+          <br><label for="exampleInputEmail1">Nome</label>
           <input type="text" name="nome_user" class="form-control" id="exampleInputName1">
         </div>
 

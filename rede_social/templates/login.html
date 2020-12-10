@@ -12,11 +12,16 @@
 {% endblock %}
 {% block conteudo %}
 <div class="login-form shadow p-3 mb-5 bg-white rounded">
-    <h2 class="form-title">Fazer login</h2><br>
-
-    <form action="/logar" method="POST" >
+    <h2 class="form-title">Fazer login</h2><br> 
+        {% if mensagemUserInex %}
+        <span class="alert alert-warning">{{mensagemUserInex}}</span>
+        {% endif %}
+        {% if mensagemSenha %}
+        <span class="alert alert-warning">{{mensagemSenha}}</span>
+        {% endif %}
+    <form action="/info_login" method="POST" >
         <div class="form-group">
-          <label for="exampleInputEmail1">Email</label>
+          <br><label for="exampleInputEmail1">Email</label>
           <input type="email" name="email_user" class="form-control" placeholder="xxxxxx@gmail.com" id="exampleInputEmail1" aria-describedby="emailHelp">
         </div>
 

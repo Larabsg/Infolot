@@ -16,15 +16,16 @@
 {% block conteudo %}
 <div class="login-form shadow p-3 mb-5 bg-white rounded">
     <h2 class="form-title">Cadastre-se</h2><br>
+
     <form action="/cadastrar/loja" method="POST">
         <div class="form-group">
           <label for="exampleInputEmail1">Nome da loja</label>
-          <input type="text" name="nome_cad_loja" class="form-control" id="exampleInputName1">
+          <input type="text" name="nome_loja" class="form-control" id="exampleInputName1">
         </div>
 
         <div class="form-group">
           <label for="exampleInputEmail1">CNPJ</label>
-          <input type="text" name="cnpj_cad_loja" class="form-control" >
+          <input type="text" name="cnpj_loja" class="form-control" >
         </div>
 
         <div class="form-group">
@@ -34,15 +35,45 @@
 
         <div class="form-group">
           <label for="exampleInputEmail1">Email</label>
-          <input type="email" name="email_cad_loja" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <input type="email" name="email_loja" class="form-control" aria-describedby="emailHelp">
         </div>
 
         <div class="form-group">
           <label for="exampleInputPassword1">Senha</label>
-          <input type="password" name="senha_cad_loja" class="form-control" id="exampleInputPassword1">
+          <input type="password" name="senha_loja" class="form-control">
         </div>
 
-        <br><input type="submit" class="btn btn-secondary" value="Registrar">
+        <div class="text-center form-group">
+            <input type="text" value="" name="latitude" id="latitude" class="form-control">
+            <input type="text" value="" name="longitude" id="longitude" class="form-control">
+            <input type="submit" value="Clique para dizer sua localização e se cadastrar" name="" class="btn btn-primary form-control">
+        </div>
+
   </form>
 </div>
+<script>
+  //Recebendo geolocalização do navegador
+  var x = document.getElementById("demo");
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(preencher);
+    } else {
+      x.innerHTML = "Geolocalização não suportada pelo seu navegador.";
+    }
+  }
+
+  function preencher(position) {
+    let latitude = document.getElementById('latitude');
+    let longitude = document.getElementById('longitude');
+
+    latitude.value = position.coords.latitude;
+    longitude.value = position.coords.longitude;
+    console.log('Lat: ${latitude.value}, Lon: ${longitude.value}')
+  }
+
+  window.onload = function() {
+      getLocation();
+  }
+</script>
 {% endblock %}
