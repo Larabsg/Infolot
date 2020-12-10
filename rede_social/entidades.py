@@ -14,4 +14,6 @@ class Loja(db.Model):
     cnpj = db.Column(db.String(100), unique=True, nullable=False)
     latitude = db.Column(db.String(100), unique=True, nullable=False)
     longitude = db.Column(db.String(100), unique=True, nullable=False)
+    area = db.Column(db.String(100), nullable=False)
+    ocupacaoDaLoja = db.Column(db.Integer, nullable=True)
     senhaLoja = db.Column(db.String(100), nullable=False)

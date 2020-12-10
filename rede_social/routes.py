@@ -105,6 +105,7 @@ def cadastrar_loja():
     ocupacao_limite = request.form['ocupacao_limite']
     latitude = request.form['latitude']
     longitude = request.form['longitude']
+    area = request.form['areaLoja']
     #alerta = 'Cadastro realizado com sucesso!'
     
     loja = Loja.query.filter_by(cnpj = cnpj_cad_loja).first()
@@ -122,6 +123,7 @@ def cadastrar_loja():
         novaLoja.cnpj = cnpj_cad_loja
         novaLoja.latitude = latitude
         novaLoja.longitude = longitude
+        novaLoja.area = area
 
         db.session.add(novaLoja)
         db.session.commit()
@@ -150,30 +152,41 @@ def removeLoja(id):
 
 @app.route('/checking', methods=['POST'])
 def checking():
-    lat = float(request.form['lat'])*math.pi/180
-    lon = float(request.form['lon'])*math.pi/180
-    loja = request.form['loja']
+    
+    recebeLongitude = request.form['lon']
+    recebeLatitude = request.form['lat']
+    latitude_calculada = float(recebeLatitude)*math.pi/180
+    longitude_calculada = float(recebeLongitude)*math.pi/180
+    nomeLoja = request.form['loja']
 
-    l_cad = lojas[loja]
+    # LatitudeDoBanco = Loja.query.filter_by(latitude = recebeLatitude).first()
+    # LongitudeDoBanco = Loja.query.filter_by(longitude = recebeLongitude).first()
+    #AreaDaLoja = Loja.query.get(area)
+    loja = Loja.query.filter_by(nomeLoja = nomeLoja).first()
+    LatitudeDoBanco = float(loja.latitude)
+    LongitudeDoBanco = float(loja.longitude)
+    #return loja.nomeLoja
 
-    l_lat = l_cad['lat']*math.pi/180
-    l_lon = l_cad['lon']*math.pi/180
-    l_a = l_cad['area']
+    # l_cad = lojas[loja]
+
+    l_lat = LatitudeDoBanco*math.pi/180
+    l_lon = LongitudeDoBanco*math.pi/180
+    l_a = float(loja.area)
 
     raio = math.sqrt(l_a/math.pi)
 
-    deltaLng = l_lon - lon
+    deltaLng = l_lon - longitude_calculada
 
-    s = math.cos(math.pi/2 - l_lat)*math.cos(math.pi/2 - lat) + math.sin(math.pi/2 - l_lat)*math.sin(math.pi/2 - lat)*math.cos(deltaLng)
+    s = math.cos(math.pi/2 - l_lat)*math.cos(math.pi/2 - latitude_calculada) + math.sin(math.pi/2 - l_lat)*math.sin(math.pi/2 - latitude_calculada)*math.cos(deltaLng)
     arco = math.acos(s)
 
     distancia = arco*6378*1000
 
 # Confere se a pessoa que fez checking está dentro ou fora da loja
-
+    ContaUm = loja.ocupacaoDaLoja
     if distancia <= raio:
-        l_cad['ocupacao'] += 1
-        return render_template('feed.html', dados = l_cad['ocupacao'])
+        ContaUm += 1
+        return render_template('feed.html', ContaUm = ContaUm)
     else: 
         return f'Fora. Distância: {distancia} metros. Raio: {raio} metros'
     return f'Você está na loja {loja}'
