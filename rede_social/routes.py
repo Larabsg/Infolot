@@ -1,7 +1,7 @@
 # from rede_social import create_app
 import math
 from flask import render_template, redirect, url_for, request, redirect, session, current_app as app
-from rede_social import db
+from rede_social import db, bcrypt
 from rede_social.entidades import Usuario, Loja
 
 #http://larabsg18.pythonanywhere.com
@@ -32,8 +32,6 @@ def registerpage():
 def register_store():
     return render_template('register_store.html')
 
-
-
 @app.route('/feed')
 def feedpage():
     return render_template('feed.html')
@@ -63,7 +61,7 @@ def info_login():
     alguem = Usuario.query.filter_by(email = email_login).first()
 
     if alguem is not None:
-        if senha_login == alguem.senha:
+        if bcrypt.check_password_hash(alguem.senha, senha_login):
             return render_template('feed.html')
         else:
             return render_template('login.html', mensagemSenha = 'Senha inválida')
@@ -84,14 +82,17 @@ def cadastrar():
         #mensagem = 'Usuário já cadastrado'
         return render_template('register.html', mensagem = 'Usuário já cadastrado')
 
-#Cadastra novo usuário ao banco
+    # Cadastra novo usuário ao banco
     else:
         novo = Usuario()
         novo.nome = nome_cad
         novo.email = email_cad
-        novo.senha = senha_cad
+        # Criptografa senha 
+        senha_hash = bcrypt.generate_password_hash(senha_cad).decode('utf-8')
 
-#Adiciona novo usuário ao banco e retorna à página de login
+        novo.senha = senha_hash
+
+        # Adiciona novo usuário ao banco e retorna à página de login
         db.session.add(novo)
         db.session.commit()
         return render_template('login.html')
@@ -118,7 +119,11 @@ def cadastrar_loja():
         novaLoja = Loja()
         novaLoja.nomeLoja = nome_cad_loja
         novaLoja.emailLoja = email_cad_loja
-        novaLoja.senhaLoja = senha_cad_loja
+
+        # Crptografa senha da loja
+        senha_hash_loja = bcrypt.generate_password_hash(senha_cad_loja).decode('utf-8')
+
+        novaLoja.senhaLoja = senha_hash_loja
         novaLoja.limite = ocupacao_limite
         novaLoja.cnpj = cnpj_cad_loja
         novaLoja.latitude = latitude

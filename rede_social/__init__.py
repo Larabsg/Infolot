@@ -6,9 +6,13 @@ from flask.cli import with_appcontext
 
 from flask_sqlalchemy import SQLAlchemy
 
+from flask_bcrypt import Bcrypt
+
 #sqlite:///rede_social.db
 
 db = SQLAlchemy()
+
+bcrypt = Bcrypt()
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -22,6 +26,7 @@ def create_app():
         pass
 
     db.init_app(app)
+    bcrypt.init_app(app)
 
     app.cli.add_command(init_db_command)
     with app.app_context():
