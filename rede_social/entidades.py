@@ -15,5 +15,5 @@ class Loja(db.Model):
     latitude = db.Column(db.String(100), unique=True, nullable=False)
     longitude = db.Column(db.String(100), unique=True, nullable=False)
     area = db.Column(db.String(100), nullable=False)
-    ocupacaoDaLoja = db.Column(db.Integer, nullable=True)
+    ocupacaoDaLoja = db.Column(db.Integer)
     senhaLoja = db.Column(db.String(100), nullable=False)

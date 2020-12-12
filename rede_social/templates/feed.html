@@ -43,7 +43,7 @@
         <img src="../static/img/store-984393_1920.jpg" class="banner" alt="" /><br>
     </div>
     <div>
-        <h1 class="p-2 bd-highlight">Maria's Store</h1>
+        <h1 class="p-2 bd-highlight"> {{nome}} </h1>
         <button class="botao btn">Seguir</button>
     </div><hr>
     {% if dados %}
@@ -63,7 +63,7 @@
 </div>
     
     <div class="contador-pessoas text-center">
-        Limite de pessoas na loja: 20.
+        Limite de pessoas na loja: {{limite}}.
         <p id="situacao">Dentro da loja: {{ContaUm}}.</p>
         <p>Clique para enviar suas coordenadas.</p>
       
@@ -71,7 +71,7 @@
             <input type="hidden" name="loja" id="loja1" value="LojaCrip">
             <input type="hidden" value="" name="lat" id="lat">
             <input type="hidden" value="" name="lon" id="lon">
-            <input type="submit" value="Diga que você está aqui" name="" class="btn btn-primary">
+            <input type="submit" value="Diga que você está aqui" name="check" class="btn btn-primary">
         </form>
         <p id="demo"></p>
 

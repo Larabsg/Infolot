@@ -134,6 +134,15 @@ def cadastrar_loja():
         db.session.commit()
         return render_template('login.html')
 
+# Gera uma página para as lojas cadastradas
+@app.route('/feed/<int:id>')
+def feed_loja(id):
+    qualLoja = Loja.query.get(id)
+    return render_template('feed.html',
+                            nome = qualLoja.nomeLoja,
+                            limite = qualLoja.limite
+                            ) #faltando ocupacao, tirei p testar
+
 # Remove alguém do banco
 @app.route('/remove/<int:id>')
 def remove(id):
@@ -158,6 +167,7 @@ def removeLoja(id):
 @app.route('/checking', methods=['POST'])
 def checking():
     
+    #check = request.form['check']
     recebeLongitude = request.form['lon']
     recebeLatitude = request.form['lat']
     latitude_calculada = float(recebeLatitude)*math.pi/180
@@ -174,8 +184,8 @@ def checking():
 
     # l_cad = lojas[loja]
 
-    l_lat = LatitudeDoBanco*math.pi/180
-    l_lon = LongitudeDoBanco*math.pi/180
+    l_lat = float(LatitudeDoBanco)*math.pi/180
+    l_lon = float(LongitudeDoBanco)*math.pi/180
     l_a = float(loja.area)
 
     raio = math.sqrt(l_a/math.pi)
@@ -190,9 +200,10 @@ def checking():
 # Confere se a pessoa que fez checking está dentro ou fora da loja
     ContaUm = loja.ocupacaoDaLoja
     if distancia <= raio:
-        ContaUm += 1
+        ContaUm = ContaUm + 1
         return render_template('feed.html', ContaUm = ContaUm)
     else: 
-        return f'Fora. Distância: {distancia} metros. Raio: {raio} metros'
-    return f'Você está na loja {loja}'
+        alert = 'Você não está nesta loja, tente fazer a contagem manual!'
+        return render_template('feed.html', alerta = alert)
+    #return f'Você está na loja {loja.nomeLoja}'
 

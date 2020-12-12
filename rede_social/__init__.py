@@ -26,6 +26,7 @@ def create_app():
         pass
 
     db.init_app(app)
+    
     bcrypt.init_app(app)
 
     app.cli.add_command(init_db_command)
