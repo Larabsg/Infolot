@@ -201,6 +201,9 @@ def checking():
     ContaUm = loja.ocupacaoDaLoja
     if distancia <= raio:
         ContaUm = ContaUm + 1
+        
+        ''' Redirecionando errado quando clica no botao '''
+
         return render_template('feed.html', ContaUm = ContaUm)
     else: 
         alert = 'Você não está nesta loja, tente fazer a contagem manual!'
