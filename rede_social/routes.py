@@ -119,6 +119,7 @@ def cadastrar_loja():
         novaLoja = Loja()
         novaLoja.nomeLoja = nome_cad_loja
         novaLoja.emailLoja = email_cad_loja
+        novaLoja.ocupacaoDaLoja = 0
 
         # Crptografa senha da loja
         senha_hash_loja = bcrypt.generate_password_hash(senha_cad_loja)#.decode('utf-8')
