@@ -12,7 +12,7 @@ def homepage():
     usuario_logado = False
     return render_template('index.html', logado = usuario_logado)
 
-@app.route('/sobre') 
+@app.route('/sobre')
 def aboutpage():
     return render_template('about.html')
 
@@ -75,11 +75,11 @@ def cadastrar():
     email_cad = request.form['email_user']
     senha_cad = request.form['senha_user']
 
-#Verifica se email do usuário já é cadastrado no banco
+    # Verifica se email do usuário já é cadastrado no banco
     alguem = Usuario.query.filter_by(email = email_cad).first()
 
     if alguem is not None:
-        #mensagem = 'Usuário já cadastrado'
+
         return render_template('register.html', mensagem = 'Usuário já cadastrado')
 
     # Cadastra novo usuário ao banco
@@ -87,8 +87,8 @@ def cadastrar():
         novo = Usuario()
         novo.nome = nome_cad
         novo.email = email_cad
-        # Criptografa senha 
-        senha_hash = bcrypt.generate_password_hash(senha_cad).decode('utf-8')
+        # Criptografa senha
+        senha_hash = bcrypt.generate_password_hash(senha_cad)#.decode('utf-8')
 
         novo.senha = senha_hash
 
@@ -108,7 +108,7 @@ def cadastrar_loja():
     longitude = request.form['longitude']
     area = request.form['areaLoja']
     #alerta = 'Cadastro realizado com sucesso!'
-    
+
     loja = Loja.query.filter_by(cnpj = cnpj_cad_loja).first()
 
     if loja is not None:
@@ -121,7 +121,7 @@ def cadastrar_loja():
         novaLoja.emailLoja = email_cad_loja
 
         # Crptografa senha da loja
-        senha_hash_loja = bcrypt.generate_password_hash(senha_cad_loja).decode('utf-8')
+        senha_hash_loja = bcrypt.generate_password_hash(senha_cad_loja)#.decode('utf-8')
 
         novaLoja.senhaLoja = senha_hash_loja
         novaLoja.limite = ocupacao_limite
@@ -166,7 +166,7 @@ def removeLoja(id):
 
 @app.route('/checking', methods=['POST'])
 def checking():
-    
+
     #check = request.form['check']
     recebeLongitude = request.form['lon']
     recebeLatitude = request.form['lat']
@@ -201,11 +201,11 @@ def checking():
     ContaUm = loja.ocupacaoDaLoja
     if distancia <= raio:
         ContaUm = ContaUm + 1
-        
+
         ''' Redirecionando errado quando clica no botao '''
 
         return render_template('feed.html', ContaUm = ContaUm)
-    else: 
+    else:
         alert = 'Você não está nesta loja, tente fazer a contagem manual!'
         return render_template('feed.html', alerta = alert)
     #return f'Você está na loja {loja.nomeLoja}'

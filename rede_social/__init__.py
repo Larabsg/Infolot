@@ -26,7 +26,7 @@ def create_app():
         pass
 
     db.init_app(app)
-    
+
     bcrypt.init_app(app)
 
     app.cli.add_command(init_db_command)
@@ -40,3 +40,5 @@ def init_db_command():
     from . import entidades
     db.create_all()
     click.echo('Criei o banco com sucesso.')
+
+app = create_app()
