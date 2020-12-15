@@ -203,6 +203,5 @@ def checking():
         return redirect(f'/feed/{id}')
         
     else:
-        alert = 'Você não está nesta loja, tente fazer a contagem manual!'
         id = request.form['id']
         return redirect(f'/feed/{id}')
