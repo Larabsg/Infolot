@@ -6,7 +6,7 @@ from rede_social.entidades import Usuario, Loja
 
 #http://larabsg18.pythonanywhere.com
 
-# Rotas para navegação
+# Rotas para navegação entre páginas
 @app.route('/')
 def homepage():
     usuario_logado = False
@@ -40,19 +40,19 @@ def feedpage():
 def redefinirpage():
     return render_template('redefinir.html')
 
-@app.route('/contador_manual')
+@app.route('/inicio')
 def contador_manual():
-    return render_template('contador_manual.html')
+    return render_template('inicio.html')
 
 # Rotas para enviar/receber informações dos inputs
 
-#Rota para o input de buscar usuário
+# Rota para o input de buscar usuário
 @app.route('/buscar')
 def buscar():
     busca = request.args['search']
     return f'busca:{busca}'
 
-#Rota para inputs de login
+# Rota para inputs de login
 @app.route('/info_login', methods=['POST'])
 def info_login():
     email_login = request.form['email_user']
@@ -62,13 +62,13 @@ def info_login():
 
     if alguem is not None:
         if bcrypt.check_password_hash(alguem.senha, senha_login):
-            return render_template('feed.html')
+            return render_template('inicio.html')
         else:
             return render_template('login.html', mensagemSenha = 'Senha inválida')
     else:
         return render_template('login.html', mensagemUserInex = 'Usuário inexistente')
 
-#Rota para inputs de cadastro
+# Rota para inputs de cadastro de usuário
 @app.route('/cadastrar', methods=['POST'])
 def cadastrar():
     nome_cad = request.form['nome_user']
@@ -87,7 +87,7 @@ def cadastrar():
         novo = Usuario()
         novo.nome = nome_cad
         novo.email = email_cad
-        # Criptografa senha
+        # Criptografa senha do usuário
         senha_hash = bcrypt.generate_password_hash(senha_cad)#.decode('utf-8')
 
         novo.senha = senha_hash
@@ -107,12 +107,10 @@ def cadastrar_loja():
     latitude = request.form['latitude']
     longitude = request.form['longitude']
     area = request.form['areaLoja']
-    #alerta = 'Cadastro realizado com sucesso!'
 
     loja = Loja.query.filter_by(cnpj = cnpj_cad_loja).first()
 
     if loja is not None:
-        #session['mensagem'] = 'Usuário já cadastrado'
         return redirect('/cadastro_loja')
 
     else:
@@ -141,8 +139,10 @@ def feed_loja(id):
     qualLoja = Loja.query.get(id)
     return render_template('feed.html',
                             nome = qualLoja.nomeLoja,
-                            limite = qualLoja.limite
-                            ) #faltando ocupacao, tirei p testar
+                            limite = qualLoja.limite,
+                            id = id,
+                            ContaUm = qualLoja.ocupacaoDaLoja
+                            )
 
 # Remove alguém do banco
 @app.route('/remove/<int:id>')
@@ -162,29 +162,22 @@ def removeLoja(id):
 
 # Rota para funcionalidade geolocalização
 
-#dicionario de teste para nao apresentar o erro ao procurar por 'lojas'
-#lojas = {'Maria': {'lat': -4.5921858, 'lon': -37.735278, 'area': 1000.0, 'ocupacao': 0}}
-
 @app.route('/checking', methods=['POST'])
 def checking():
 
-    #check = request.form['check']
+    # Recebe localização do usuário
     recebeLongitude = request.form['lon']
     recebeLatitude = request.form['lat']
     latitude_calculada = float(recebeLatitude)*math.pi/180
     longitude_calculada = float(recebeLongitude)*math.pi/180
     nomeLoja = request.form['loja']
 
-    # LatitudeDoBanco = Loja.query.filter_by(latitude = recebeLatitude).first()
-    # LongitudeDoBanco = Loja.query.filter_by(longitude = recebeLongitude).first()
-    #AreaDaLoja = Loja.query.get(area)
+    # Recebe dados de localização da loja 
     loja = Loja.query.filter_by(nomeLoja = nomeLoja).first()
     LatitudeDoBanco = float(loja.latitude)
     LongitudeDoBanco = float(loja.longitude)
-    #return loja.nomeLoja
 
-    # l_cad = lojas[loja]
-
+    # Cálculo para geolocalização
     l_lat = float(LatitudeDoBanco)*math.pi/180
     l_lon = float(LongitudeDoBanco)*math.pi/180
     l_a = float(loja.area)
@@ -198,16 +191,18 @@ def checking():
 
     distancia = arco*6378*1000
 
-# Confere se a pessoa que fez checking está dentro ou fora da loja
+    # Confere se a pessoa que fez checking está dentro ou fora da loja
     ContaUm = loja.ocupacaoDaLoja
     if distancia <= raio:
         ContaUm = ContaUm + 1
+        loja.ocupacaoDaLoja = ContaUm
+        db.session.add(loja)
+        db.session.commit()
 
-        ''' Redirecionando errado quando clica no botao '''
-
-        return render_template('feed.html', ContaUm = ContaUm)
+        id = request.form['id']
+        return redirect(f'/feed/{id}')
+        
     else:
         alert = 'Você não está nesta loja, tente fazer a contagem manual!'
-        return render_template('feed.html', alerta = alert)
-    #return f'Você está na loja {loja.nomeLoja}'
-
+        id = request.form['id']
+        return redirect(f'/feed/{id}')

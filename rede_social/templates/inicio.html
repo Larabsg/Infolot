@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block titulo %}Infolot{% endblock %}
+{% block style %}
+    a {
+        color: black;
+    }
+    a.str:hover {
+        color: #386C6D;
+    }
+{% endblock %}
+
+{% block conteudo%}
+<div class="title_page">
+    <div class="container">
+        <h1>Lojas cadastradas</h1>
+    </div>
+</div>
+
+<div class="card container" style="width: 18rem;">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><a href="/feed/1" class="str text-decoration-none">Maria's Store</a></li>
+      <li class="list-group-item"><a href="/feed/2" class="str text-decoration-none">Shopping Aracati</a></li>
+      <li class="list-group-item"><a href="/feed/3" class="str text-decoration-none">Super mercado Aracas</a></li>
+      <li class="list-group-item"><a href="/feed/4" class="str text-decoration-none">Boutique da Luh</a></li>
+    </ul>
+  </div>
+{% endblock %}

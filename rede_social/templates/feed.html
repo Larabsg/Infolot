@@ -3,7 +3,7 @@
 {% block style %}
         img.banner {
             width: 100%;
-            height: 75%;
+            height: 400px;
             background-size: cover;
         }
         h1 {
@@ -40,7 +40,7 @@
 {% block conteudo %}
 
     <div>
-        <img src="../static/img/store-984393_1920.jpg" class="banner" alt="" /><br>
+        <img src="../static/img/mundo-mask.png" class="banner" alt="" /><br>
     </div>
     <div>
         <h1 class="p-2 bd-highlight"> {{nome}} </h1>
@@ -71,6 +71,7 @@
             <input type="hidden" name="loja" id="loja1" value="{{nome}}">
             <input type="hidden" value="" name="lat" id="lat">
             <input type="hidden" value="" name="lon" id="lon">
+            <input type="hidden" value="{{id}}" name="id">
             <input type="submit" value="Diga que você está aqui" name="check" class="btn btn-primary">
         </form>
         <p id="demo"></p>
@@ -109,6 +110,7 @@
             atualizaSituacao();
         }
         function diminui(){
+            // let x = {{ContaUm}};
     	    barra_tamanho -= 10;
             atualizaBarra();
             atualizaSituacao();
